@@ -41,7 +41,7 @@ for i in stacks:
 #print(stacks)
 #stacks = [stack1, stack2, stack3]
 
-input = open("input commands", "r")
+input = open("day5 input", "r")
 
 arr = input.readlines()
 
