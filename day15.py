@@ -15,6 +15,8 @@ Sensor at x=14, y=3: closest beacon is at x=15, y=3
 Sensor at x=20, y=1: closest beacon is at x=15, y=3"""
 
 input = input.splitlines()
+f = open("day15_input.txt", "r")
+input = f.readlines()
 
 def parseInput(s, num):
     xValues = []
@@ -30,7 +32,7 @@ def parseInput(s, num):
         yValues.append(dig[1])
         yValues.append(dig[3])
     maxX, minX, maxY, minY = max(xValues), min(xValues), max(yValues), min(yValues)
-    minX = -2
+    minX = -2077481
 
     if minY < 0:
         for i in values:
@@ -48,13 +50,13 @@ def parseInput(s, num):
 
     row = []
 
-    for i in range(maxY):
+    for i in range(maxX):
         row.append(False)
 
-    ofInterest = []
-    for i in values:
-        if i[1] <= num <= i[3] or i[1] >= num >= i[3]:
-            ofInterest.append(i)
+    ofInterest = values
+    #for i in values:
+        # if (i[1] <= num <= i[3]) or (i[1] >= num >= i[3]):
+        #     ofInterest.append(i)
 
     for i in ofInterest:
         radius = abs(i[0] - i[2]) + abs(i[1]-i[3])
@@ -62,24 +64,25 @@ def parseInput(s, num):
 
     for i in ofInterest:
         dif = abs(i[1] - num)
-        row[i[0]] = True
+        if not dif > i[4]:
+            row[i[0]] = True
 
-        restRadius = abs(dif-i[4])
+            restRadius = abs(dif-i[4])
 
-        for j in range(restRadius):
-            left = i[0] - j
-            right = i[0] + j
-            if left >= minX:
-                row[left] = True
-            if right <= maxX:
-                row[right] = True
+            for j in range(restRadius+1):
+                left = i[0] - j
+                right = i[0] + j
+                if left >= minX:
+                    row[left] = True
+                if right <= maxX:
+                    row[right] = True
 
 
     return sum(row)
 
 
 def main():
-    return parseInput(input, 10)
+    return parseInput(input, 2000000)
 
 if __name__ == "__main__":
     print(main())
